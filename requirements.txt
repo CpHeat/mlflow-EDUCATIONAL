@@ -11,3 +11,4 @@ kaleido
 nbformat
 setuptools<81
 boto3
+ipykernel
