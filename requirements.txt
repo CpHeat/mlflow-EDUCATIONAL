@@ -1,0 +1,14 @@
+catboost
+pandas
+lightgbm
+xgboost
+joblib
+scikit-learn
+hyperopt
+fastparquet
+mlflow
+kaleido
+nbformat
+setuptools<81
+boto3
+ipykernel
