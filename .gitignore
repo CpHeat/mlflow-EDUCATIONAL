@@ -4,6 +4,7 @@ __pycache__
 mlruns/
 mlartifacts/
 mlflow.db
+mlflow.log
 
 # Notebooks en cours de création
 02_Tuning_Manuel_Artefacts.ipynb
@@ -11,3 +12,14 @@ mlflow.db
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Virtual Env
+.venv/
+venv/
+env/
+
+# Models and auto-generated
+models/
+catboost_info/
+*.joblib
+*.pkl
