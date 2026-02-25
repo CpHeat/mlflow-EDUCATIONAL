@@ -264,6 +264,9 @@ def optimize_boosting_model(
     best_score = trials.trials[best_trial_idx]["result"]["score"]
     best_std = trials.trials[best_trial_idx]["result"]["std"]
 
+    # Logger chaque trial dans MLflow (experiment courante)
+    _log_hyperopt_trials_to_mlflow(trials, model_type, scoring)
+
     print()
     print(f"Meilleurs parametres {model_type.upper()}:")
     for k, v in best_params.items():
@@ -271,6 +274,50 @@ def optimize_boosting_model(
     print(f"\nMeilleur {scoring} (CV): {best_score:.4f} (+/- {best_std:.4f})")
 
     return best_params, best_score, trials
+
+
+def _log_hyperopt_trials_to_mlflow(trials: Trials, model_type: str, scoring: str) -> None:
+    """Logue chaque trial Hyperopt comme un run MLflow distinct."""
+    try:
+        import mlflow
+    except ImportError:
+        return
+
+    n_trials = len(trials.trials)
+    print(f"\nLogging {n_trials} trials Hyperopt dans MLflow...")
+
+    # Trouver le meilleur score pour tagger is_best
+    scores = [t["result"].get("score", 0) for t in trials.trials]
+    best_idx = int(np.argmax(scores))
+
+    for i, trial in enumerate(trials.trials):
+        result = trial["result"]
+        score = result.get("score", 0)
+        std = result.get("std", 0)
+
+        # Extraire les params depuis misc/vals (format Hyperopt)
+        raw_vals = trial["misc"]["vals"]
+        params = {k: v[0] for k, v in raw_vals.items() if v}
+        converted = _convert_params(params, model_type)
+
+        run_name = f"hyperopt_{model_type}_#{i+1:03d}"
+
+        try:
+            with mlflow.start_run(run_name=run_name):
+                safe_params = {k: v for k, v in converted.items() if v is not None}
+                mlflow.log_params(safe_params)
+
+                mlflow.log_metric(f"cv_{scoring}", score)
+                mlflow.log_metric(f"cv_{scoring}_std", std)
+
+                mlflow.set_tag("model_type", model_type)
+                mlflow.set_tag("stage", "hyperopt")
+                mlflow.set_tag("is_best", str(i == best_idx))
+
+        except Exception as e:
+            print(f"  Erreur MLflow trial #{i+1}: {e}")
+
+    print(f"  {n_trials} trials logues dans MLflow.")
 
 
 def plot_optimization_history(trials: Trials, scoring: str = "score") -> None:

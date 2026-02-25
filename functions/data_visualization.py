@@ -40,7 +40,7 @@ def plot_confusion_matrix(y_true, y_pred, model_name, labels=None):
         height=450,
     )
     fig.show()
-    return cm
+    return cm, fig
 
 def plot_roc_curve(y_true, y_proba, model_name):
     """Affiche la courbe ROC avec l'AUC (classification binaire uniquement)."""
@@ -77,4 +77,4 @@ def plot_roc_curve(y_true, y_proba, model_name):
         showlegend=True,
     )
     fig.show()
-    return roc_auc
+    return roc_auc, fig

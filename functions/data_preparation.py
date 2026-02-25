@@ -1,3 +1,6 @@
+from sklearn.calibration import LabelEncoder
+
+
 def prepare_data(df, target_col, exclude_cols=None):
     """
     Prépare les features (X) et la target (y) pour l'entraînement.

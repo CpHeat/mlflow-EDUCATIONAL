@@ -5,6 +5,7 @@ xgboost
 joblib
 scikit-learn
 hyperopt
+optuna
 fastparquet
 mlflow
 kaleido

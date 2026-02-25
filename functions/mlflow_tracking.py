@@ -17,6 +17,7 @@ Usage dans un notebook:
 import logging
 import tempfile
 import os
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import numpy as np
@@ -25,6 +26,11 @@ from dotenv import load_dotenv
 from sklearn.metrics import confusion_matrix
 
 logger = logging.getLogger(__name__)
+
+
+def _dated_run_name(run_name: str) -> str:
+    """Ajoute un suffixe _dd-mm-yyyy au nom du run."""
+    return f"{run_name} {datetime.now().strftime('%d/%m/%Y %Hh:%Mm:%Ss')}"
 
 # Charger le .env depuis la racine du projet (rendu/)
 _env_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
@@ -133,6 +139,7 @@ def log_training_run(
     class_labels: Optional[List[str]] = None,
     figures: Optional[Dict[str, Any]] = None,
     tags: Optional[Dict[str, str]] = None,
+    registered_model_name: Optional[str] = None,
 ) -> Optional[str]:
     """
     Log un run d'entrainement complet dans MLflow.
@@ -149,6 +156,7 @@ def log_training_run(
         class_labels: Noms des classes (ex: ["Non grave", "Grave"])
         figures: Dict de figures Plotly a logger comme artefacts
         tags: Tags supplementaires (ex: {"dataset": "accident", "stage": "baseline"})
+        registered_model_name: Nom pour le Model Registry (ex: "accident-XGBoost")
 
     Returns:
         Le run_id MLflow si succes, None sinon.
@@ -156,7 +164,7 @@ def log_training_run(
     try:
         import mlflow
 
-        with mlflow.start_run(run_name=run_name):
+        with mlflow.start_run(run_name=_dated_run_name(run_name)):
             # Parametres
             safe_params = {k: v for k, v in params.items() if v is not None}
             mlflow.log_params(safe_params)
@@ -177,9 +185,14 @@ def log_training_run(
             # Modele
             try:
                 model_logger = _get_mlflow_model_logger(model_name)
-                model_logger.log_model(model, artifact_path="model")
+                dated_name = f"{registered_model_name or 'model'} {datetime.now().strftime('%d-%m-%Y %Hh%Mm%Ss')}"
+                model_logger.log_model(
+                    model,
+                    name=dated_name,
+                    registered_model_name=registered_model_name,
+                )
             except Exception as e:
-                logger.warning(f"Impossible de logger le modele : {e}")
+                print(f"  ⚠️  Impossible de logger le modele : {e}")
 
             # Artefacts
             with tempfile.TemporaryDirectory() as tmpdir:
@@ -233,7 +246,7 @@ def log_hyperopt_run(
 
         run_name = f"hyperopt_{model_type}"
 
-        with mlflow.start_run(run_name=run_name):
+        with mlflow.start_run(run_name=_dated_run_name(run_name)):
             # Parametres
             safe_params = {k: v for k, v in best_params.items() if v is not None}
             mlflow.log_params(safe_params)
@@ -296,7 +309,7 @@ def log_final_model(
     try:
         import mlflow
 
-        with mlflow.start_run(run_name=run_name):
+        with mlflow.start_run(run_name=_dated_run_name(run_name)):
             # Metriques
             mlflow.log_metric("f1_test_final", f1_test)
 
