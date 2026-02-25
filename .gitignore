@@ -23,3 +23,6 @@ models/
 catboost_info/
 *.joblib
 *.pkl
+
+# Images
+*.png
