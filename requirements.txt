@@ -17,3 +17,4 @@ seaborn
 optuna
 optuna-integration
 hyperopt
+ipywidgets
