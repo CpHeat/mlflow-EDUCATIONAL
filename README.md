@@ -89,6 +89,7 @@ Le serveur **MLflow** s'exécute via Docker et utilise **SQLite** (`mlflow.db`) 
 ```text
 .
 ├── README.md                # Documentation principale
+├── MLflow.pdf               # La présentation de bg 
 ├── docker-compose.yml       # Configuration Docker pour le serveur MLflow
 ├── requirements.txt         # Dépendances Python
 ├── notebooks/               # Dossier contenant les notebooks d'évaluation
