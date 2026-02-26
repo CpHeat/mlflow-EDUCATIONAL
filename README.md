@@ -91,17 +91,14 @@ Le serveur **MLflow** s'exécute via Docker et utilise **SQLite** (`mlflow.db`) 
 ├── README.md                # Documentation principale
 ├── docker-compose.yml       # Configuration Docker pour le serveur MLflow
 ├── requirements.txt         # Dépendances Python
+|-- 01_Benchmark_Modeles.ipynb
+└── 02_Tuning_Manuel_Artefacts.ipynb
 ├── .env.example             # Variables d'environnement
-├── api/                     # (Écosystème) Code de l'API FastAPI/Flask pour le service du modèle
-├── frontend/                # (Écosystème) Interface utilisateur
 ├── data/                    # Données (non versionnées) provenant du pipeline ETL
-├── functions/               # Scripts utilitaires et fonctions partagées
-├── mlruns/ & mlartifacts/   # Stockage local des artefacts MLflow (sauvegardes des modèles, graphiques)
-├── mlflow.db                # Base de données SQLite stockant l'historique MLflow
-├── models/                  # Modèles sérialisés
-└── notebooks/               # Dossier d'expérimentation
-    ├── 01_Benchmark_Modeles.ipynb
-    └── 02_Tuning_Manuel_Artefacts.ipynb
+|--- mlflow/
+    ├── mlartifacts/   # Stockage local des artefacts MLflow (sauvegardes des modèles, graphiques)
+        ├── models/                  # Modèles sérialisés
+    ├── mlflow.db                # Base de données SQLite stockant l'historique MLflow
 ```
 
 *(Note : L'interface MLflow est accessible en local sur `http://localhost:5000`)*
