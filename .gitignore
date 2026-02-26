@@ -3,3 +3,4 @@ __pycache__
 mlflow_data/
 mlruns/
 plots/
+.ipynb_checkpoints
