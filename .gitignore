@@ -1,5 +1,6 @@
 .env
 __pycache__
+
 # MLflow
 mlflow/
 
@@ -10,12 +11,3 @@ mlflow/
 .venv/
 venv/
 env/
-
-# Models and auto-generated
-models/
-catboost_info/
-*.joblib
-*.pkl
-
-# Images
-*.png
