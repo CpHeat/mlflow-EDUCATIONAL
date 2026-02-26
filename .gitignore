@@ -1,3 +1,5 @@
 .env
 __pycache__
 mlflow_data/
+mlruns/
+plots/
