@@ -97,7 +97,7 @@ Le serveur **MLflow** s'exécute via Docker et utilise **SQLite** (`mlflow.db`) 
 │   └── 03_Tuning_Advance_Auto.ipynb
 ├── .env.example             # Variables d'environnement
 ├── data/                    # Données (non versionnées) provenant du pipeline ETL
-|--- mlflow/
+├── mlflow/
     ├── mlartifacts/   # Stockage local des artefacts MLflow (sauvegardes des modèles, graphiques)
         ├── models/                  # Modèles sérialisés
     ├── mlflow.db                # Base de données SQLite stockant l'historique MLflow
