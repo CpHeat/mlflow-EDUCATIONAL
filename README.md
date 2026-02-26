@@ -122,7 +122,7 @@ cd mlflow-EDUCATIONAL
 
 **2. Lancer le serveur MLflow via Docker**
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 *Le serveur MLflow sera accessible sur [http://localhost:5000](http://localhost:5000).*
 
@@ -152,7 +152,7 @@ cd mlflow-EDUCATIONAL
 
 **2. Lancer le serveur MLflow via Docker**
 ```powershell
-docker-compose up -d
+docker compose up -d
 ```
 *Le serveur MLflow sera accessible sur [http://localhost:5000](http://localhost:5000).*
 
