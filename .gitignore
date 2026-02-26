@@ -1,2 +1,13 @@
 .env
 __pycache__
+
+# MLflow
+mlflow/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual Env
+.venv/
+venv/
+env/

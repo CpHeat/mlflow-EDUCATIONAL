@@ -12,3 +12,8 @@ nbformat
 setuptools<81
 boto3
 ipykernel
+matplotlib
+seaborn
+optuna
+optuna-integration
+hyperopt
