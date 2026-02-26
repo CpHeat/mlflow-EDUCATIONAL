@@ -6,10 +6,6 @@ mlartifacts/
 mlflow.db
 mlflow.log
 
-# Notebooks en cours de création
-02_Tuning_Manuel_Artefacts.ipynb
-03_Tuning_Avance_Auto.ipynb
-
 # Jupyter
 .ipynb_checkpoints/
 
